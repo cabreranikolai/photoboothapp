@@ -1,0 +1,30 @@
+import { contextBridge, ipcRenderer } from 'electron';
+import type { StudioAPI } from '../shared/model';
+const api: StudioAPI = {
+  getCaptureSettings: () => ipcRenderer.invoke('capture:settings'),
+  saveCaptureSettings: (s) => ipcRenderer.invoke('capture:configure', s),
+  beginSession: (t, s) => ipcRenderer.invoke('sessions:begin', t, s),
+  captureShot: (id, n, bytes) => ipcRenderer.invoke('sessions:capture', id, n, bytes),
+  finishSession: (id) => ipcRenderer.invoke('sessions:finish', id),
+  cancelSession: (id) => ipcRenderer.invoke('sessions:cancel', id),
+  listSessions: () => ipcRenderer.invoke('sessions:list'),
+  sessionImage: (id) => ipcRenderer.invoke('sessions:image', id),
+  exportSession: (id) => ipcRenderer.invoke('sessions:export', id),
+  listPrinters: () => ipcRenderer.invoke('printers:list'),
+  printSession: (id, printer, copies) => ipcRenderer.invoke('prints:submit', id, printer, copies),
+  listPrintJobs: () => ipcRenderer.invoke('prints:list'),
+  exportSessionPDF: (id) => ipcRenderer.invoke('prints:pdf', id),
+  detectDSLR: () => ipcRenderer.invoke('camera:detect'),
+  connectDSLR: (id) => ipcRenderer.invoke('camera:connect', id),
+  disconnectDSLR: () => ipcRenderer.invoke('camera:disconnect'),
+  dslrPreview: () => ipcRenderer.invoke('camera:preview'),
+  listTemplates: () => ipcRenderer.invoke('templates:list'),
+  saveTemplate: (t) => ipcRenderer.invoke('templates:save', t),
+  deleteTemplate: (id) => ipcRenderer.invoke('templates:delete', id),
+  importAsset: (name, bytes) => ipcRenderer.invoke('assets:import', name, bytes),
+  getAsset: (id) => ipcRenderer.invoke('assets:get', id),
+  exportImage: (t) => ipcRenderer.invoke('composition:export', t),
+  exportTemplate: (t) => ipcRenderer.invoke('templates:export', t),
+  importTemplate: () => ipcRenderer.invoke('templates:import'),
+};
+contextBridge.exposeInMainWorld('studio', api);
