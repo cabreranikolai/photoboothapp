@@ -51,6 +51,9 @@
   "build": {
     "appId": "studio.luma.photobooth",
     "productName": "Luma Photobooth",
+    "directories": {
+      "output": "release"
+    },
     "files": [
       "dist/**/*",
       "dist-electron/**/*",

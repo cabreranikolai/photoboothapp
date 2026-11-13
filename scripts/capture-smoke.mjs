@@ -15,7 +15,12 @@ await mkdir(root, { recursive: true });
 const env = { ...process.env, LUMA_TEST_DATA: path.join(root, `userdata-${Date.now()}`) };
 delete env.ELECTRON_RUN_AS_NODE;
 const app = await electron.launch({
-  args: ['.', '--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'],
+  ...(process.env.LUMA_TEST_EXE ? { executablePath: process.env.LUMA_TEST_EXE } : {}),
+  args: [
+    ...(process.env.LUMA_TEST_EXE ? [] : ['.']),
+    '--use-fake-device-for-media-stream',
+    '--use-fake-ui-for-media-stream',
+  ],
   env,
 });
 try {

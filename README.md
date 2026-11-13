@@ -49,7 +49,9 @@ Sample layouts contain placeholders, not sample photography. Supply your own pho
 
 ## Packaging
 
-`npm.cmd run package:win` builds an unsigned NSIS installer. Signing, real Windows installer qualification, camera and printer hardware testing are production tasks. Dependencies must be installed before working offline.
+Run `npm.cmd run package:win` from the project folder to build the Windows NSIS installer. The output is `release/Luma Photobooth Setup 0.1.0.exe`; double-click it to install the desktop app. The installer bundles the runtime, so users do not need Node.js or npm to run the installed app. DSLR use still requires the separate digiCamControl setup described above.
+
+`release/win-unpacked/Luma Photobooth.exe` runs the packaged app without installing, but it needs the entire `win-unpacked` folder beside it. Share the Setup EXE for installation. The build is unsigned; code signing and physical camera/printer qualification remain production tasks. Building requires dependencies and packaging tools to be downloaded first.
 
 See [architecture and phase plan](docs/ARCHITECTURE.md). Tests verify print pixel bounds, 300 DPI metadata, crop anchors, overlay transparency, rotation, rounded masks, borders, duplicate strips, schema rejection, and SQLite reopening.
 
